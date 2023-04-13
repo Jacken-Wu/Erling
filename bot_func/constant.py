@@ -14,8 +14,9 @@ salt = ''
 
 store = {}
 
-with open('./data_path', 'r', encoding='utf-8') as f:
-    data_path = f.readline()[:-1]
+with open('./data_path.config', 'r', encoding='utf-8') as f:
+    data_path = f.readline()
+data_path = data_path.replace('\n', '')
 
 config_list = []
 with open(data_path + 'constant.config', 'r', encoding='utf-8') as f:
