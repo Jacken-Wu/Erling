@@ -37,19 +37,6 @@ def get_message():
     return mes
 
 
-responds = []
-with open(data_path + 'responds', 'r', encoding='utf-8') as f:
-    datas = f.readlines()
-    for data in datas:
-        responds.append(int(data))
-
-privates = []
-with open(data_path + 'privates', 'r', encoding='utf-8') as f:
-    datas = f.readlines()
-    for data in datas:
-        privates.append(int(data))
-
-
 while True:
     message = get_message()
     print(message)
@@ -208,45 +195,9 @@ while True:
             elif info[0] == '吃啥':
                 types = info[1:]
                 send_group(rand_food(types), group_id)
-            
-            elif info[0] == '商店':
-                send_group(show_store(), group_id)
-            
-            elif info[0] == '购买':
-                if buy_item(user_id, info[1]):
-                    send_group('[CQ:at,qq=%d]%s购买成功' % (user_id, read_name(user_id)), group_id)
-                else:
-                    send_group('[CQ:at,qq=%d]%s购买失败' % (user_id, read_name(user_id)), group_id)
-            
-            elif info[0] == '背包':
-                send_group('%s的背包: %s' % (read_name(user_id), read_item(user_id)), group_id)
 
-            elif info[0] == '改名':
-                name = ' '.join(info[1:])
-                if rename(user_id, name):
-                    send_group('[CQ:at,qq=%d]%s改名成功' % (user_id, name), group_id)
-                else:
-                    send_group('[CQ:at,qq=%d]%s改名失败' % (user_id, read_name(user_id)), group_id)
-
-            elif info[0] == '应和卡':
-                back = us_respond(user_id, responds)
-                if back == 0:
-                    send_group(read_name(user_id) + '使用应和卡失败', group_id)
-                elif back == 1:
-                    responds.append(user_id)
-                    send_group(read_name(user_id) + '成功使用应和卡', group_id)
-                else:
-                    send_group(read_name(user_id) + '多次使用应和卡，已返还50点love值', group_id)
-            
-            elif info[0] == '私聊卡':
-                back = us_privates(user_id, privates)
-                if back == 0:
-                    send_group(read_name(user_id) + '使用私聊卡失败', group_id)
-                elif back == 1:
-                    privates.append(user_id)
-                    send_group(read_name(user_id) + '成功使用私聊卡', group_id)
-                else:
-                    send_group(read_name(user_id) + '多次使用私聊卡，已返还100点love值', group_id)
+            elif info[0] in ['商店', '购买', '背包', '改名', '应和卡', '私聊卡']:
+                deal_store(info, user_id)
 
             else:
                 back = auto2en(gro_mess[3:])

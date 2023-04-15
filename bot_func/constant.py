@@ -49,4 +49,32 @@ for config in config_list:
         else:
             store[config_temp[0]] = int(config_temp[1])
 
-print(data_path, father_id, self_id, group_id, begin, end, appid, key, salt, store)
+
+responds = []
+with open(data_path + 'responds', 'r', encoding='utf-8') as f:
+    datas = f.readlines()
+    for data in datas:
+        responds.append(int(data))
+
+privates = []
+with open(data_path + 'privates', 'r', encoding='utf-8') as f:
+    datas = f.readlines()
+    for data in datas:
+        privates.append(int(data))
+
+
+print('data_path:', data_path)
+print('father_id:', father_id)
+print('self_id:', self_id)
+print('group_id:', group_id)
+print('begin:', begin)
+print('end:', end)
+print('appid:', appid)
+if len(key) > 6:
+    print('key: ', key[:3] + '****' + key[-3:])
+else:
+    print('key: ', key)
+print('salt: ', salt)
+print('store:', store)
+print('responds:', responds)
+print('privates:', privates)

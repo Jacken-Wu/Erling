@@ -70,8 +70,8 @@
 体重：不详  
 年龄：17  
 印象色：浅蓝  
-~~西巴，我一直把二澪的英文名记错成Erling了，项目名字就叫Erling~~
-~~明明是我自己好不容易起的名字，就当这个项目的二澪是真二澪的分身好了~~
+~~西巴，我一直把二澪的英文名记错成Erling了，项目名字就叫Erling~~  
+~~明明是我自己好不容易起的名字，就当这个项目的二澪是真二澪的分身好了~~  
 
 ![erling1](https://i0.hdslb.com/bfs/album/9bd124359cc2f015135322b4516ca219c44d8ed8.png@1036w.webp)
 ![erling2](https://i0.hdslb.com/bfs/new_dyn/7af4a311826cecfb2646458d317e9560229017508.png@1036w.webp)

@@ -1,5 +1,5 @@
 import xml.etree.ElementTree as et
-from bot_func.constant import store, data_path, group_id
+from bot_func.constant import store, data_path, group_id, responds, privates
 from bot_func.send import send_group
 
 
@@ -195,11 +195,10 @@ def read_item(user_id: int) -> str:
             return item.text
 
 
-def us_respond(user_id: int, responds: list) -> int:
+def us_respond(user_id: int) -> int:
     """
     用户使用应和卡。
     @param user_id: 用户QQ号
-    @param responds: 使用过“响应卡”的用户
     @return: int(0 - 2)
     """
     tree = et.ElementTree()
@@ -242,11 +241,10 @@ def us_respond(user_id: int, responds: list) -> int:
                     return 0
 
 
-def us_privates(user_id: int, privates: list) -> int:
+def us_privates(user_id: int) -> int:
     """
     用户使用私聊卡。
     @param user_id: 用户QQ号
-    @param privates: 使用过“私聊卡”的用户
     @return: 0：使用失败，1：使用成功，2：重复使用
     """
     tree = et.ElementTree()
@@ -289,6 +287,56 @@ def us_privates(user_id: int, privates: list) -> int:
                         return 1
                 else:
                     return 0
+
+
+def deal_store(info: list, user_id: int) -> None:
+    """
+    进行商店相关的处理
+    """ 
+    if info[0] == '商店':
+        send_group(show_store(), group_id)
+    
+    elif info[0] == '购买':
+        if len(info) == 1:
+            send_group('[CQ:at,qq=%d]%s购买失败' % (user_id, read_name(user_id)), group_id)
+        else:
+            if buy_item(user_id, info[1]):
+                send_group('[CQ:at,qq=%d]%s购买成功' % (user_id, read_name(user_id)), group_id)
+            else:
+                send_group('[CQ:at,qq=%d]%s购买失败' % (user_id, read_name(user_id)), group_id)
+    
+    elif info[0] == '背包':
+        send_group('%s的背包: %s' % (read_name(user_id), read_item(user_id)), group_id)
+
+    elif info[0] == '改名':
+        if len(info) == 1:
+            send_group('[CQ:at,qq=%d]%s改名失败' % (user_id, read_name(user_id)), group_id)
+        else:
+            name = ' '.join(info[1:])
+            if rename(user_id, name):
+                send_group('[CQ:at,qq=%d]%s改名成功' % (user_id, name), group_id)
+            else:
+                send_group('[CQ:at,qq=%d]%s改名失败' % (user_id, read_name(user_id)), group_id)
+
+    elif info[0] == '应和卡':
+        back = us_respond(user_id)
+        if back == 0:
+            send_group(read_name(user_id) + '使用应和卡失败', group_id)
+        elif back == 1:
+            responds.append(user_id)
+            send_group(read_name(user_id) + '成功使用应和卡', group_id)
+        else:
+            send_group(read_name(user_id) + '多次使用应和卡，已返还50点love值', group_id)
+    
+    elif info[0] == '私聊卡':
+        back = us_privates(user_id)
+        if back == 0:
+            send_group(read_name(user_id) + '使用私聊卡失败', group_id)
+        elif back == 1:
+            privates.append(user_id)
+            send_group(read_name(user_id) + '成功使用私聊卡', group_id)
+        else:
+            send_group(read_name(user_id) + '多次使用私聊卡，已返还100点love值', group_id)
 
 
 if __name__ == '__main__' :
