@@ -13,7 +13,7 @@ from bot_func.what_eat import rand_food, add_food_main, del_food_main
 from bot_func.erlove import *
 from bot_func.ertrans import *
 from bot_func.friend import *
-from bot_func.chat import reply_conversation, save_chat
+from bot_func.chat import reply_conversation, save_chat, update_conversation, generate_conversation, generate_vec
 from bot_func.erhelp import *
 from bot_func.say_hi import *
 from bot_func.respond import respond_group
@@ -56,9 +56,15 @@ while True:
                 backup_account()
             elif pri_mess == '推歌查看':
                 view_music()
-            elif pri_mess == '更新对话':
+            elif pri_mess == '生成对话':
+                if generate_conversation():
+                    send_message('成功生成对话库')
+            elif pri_mess == '重加载对话':
                 if update_conversation():
-                    send_message('更新对话库成功')
+                    send_message('成功重新加载对话库')
+            elif pri_mess == '生成词向量':
+                if generate_vec():
+                    send_message('成功生成词向量模型')
             elif pri_mess == 'erlove':
                 love = read_love(father_id)
                 back = 'love值!%d!' % love

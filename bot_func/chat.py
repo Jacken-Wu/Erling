@@ -20,10 +20,13 @@ for line in origin:
 del origin
 
 
-def update_conversation():
+def update_conversation() -> bool:
     """
     更新对话库。
     """
+    global asking
+    global answer
+
     with open(data_path + 'database_conversation.yml', 'r', encoding='utf-8') as f:
         origin = f.readlines()
     asking = []
@@ -47,7 +50,7 @@ def split_sentence(sentence: str) -> list:
     return words
 
 
-def generate_vec() -> None:
+def generate_vec() -> True:
     """
     生成并保存词向量模型。生成的模型保存在用户自定的data_path下。
     """
@@ -60,9 +63,10 @@ def generate_vec() -> None:
             lines.append(split_sentence(sentence))
     model = Word2Vec(lines, vector_size = 20, window=3, min_count=3, epochs=7,negative=10)
     model.save(data_path + 'model_word2vec')
+    return True
 
 
-def generate_conversation() -> None:
+def generate_conversation() -> bool:
     """
     使用词向量生成对话数据库。
     """
@@ -100,6 +104,7 @@ def generate_conversation() -> None:
                     elif conver[:4] == '  - ':
                         if flag == True:
                             f.write('  - ' + conver[4:])
+    return True
 
 
 def compare(vec1: list, vec2: list) -> float:
