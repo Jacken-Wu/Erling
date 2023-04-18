@@ -6,7 +6,7 @@ def help_father(msg_list: list) -> None:
     管理者的帮助命令。
     """
     if len(msg_list) == 0:
-        func_words = 'function:\nhelp\n提醒查看\n提醒添加\n提醒删除\n记账支出\n记账收入\n记账查看\n记账删除\n记账备份\n推歌添加\n推歌查看\n推歌删除\n添加歌曲\nerlove\n通过好友\n更新对话'
+        func_words = 'function:\nhelp\n提醒查看\n提醒添加\n提醒删除\n记账支出\n记账收入\n记账查看\n记账删除\n记账备份\n推歌添加\n推歌查看\n推歌删除\n添加歌曲\nerlove\n通过好友\n生成对话\n重加载对话\n生成词向量'
         send_message(func_words)
     elif len(msg_list) == 1:
         if msg_list[0] == 'help':
@@ -39,8 +39,12 @@ def help_father(msg_list: list) -> None:
             send_message('erlove')
         elif msg_list[0] == '通过好友':
             send_message('通过好友 好友申请id')
-        elif msg_list[0] == '更新对话':
-            send_message('更新对话')
+        elif msg_list[0] == '生成对话':
+            send_message('生成对话')
+        elif msg_list[0] == '重加载对话':
+            send_message('重加载对话')
+        elif msg_list[0] == '生成词向量':
+            send_message('生成词向量')
 
 
 def help_private(msg_list: list, user_id: int) -> None:
