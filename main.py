@@ -56,6 +56,9 @@ while True:
                 backup_account()
             elif pri_mess == '推歌查看':
                 view_music()
+            elif pri_mess == '更新对话':
+                if update_conversation():
+                    send_message('更新对话库成功')
             elif pri_mess == 'erlove':
                 love = read_love(father_id)
                 back = 'love值!%d!' % love

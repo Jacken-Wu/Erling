@@ -20,6 +20,24 @@ for line in origin:
 del origin
 
 
+def update_conversation():
+    """
+    更新对话库。
+    """
+    with open(data_path + 'database_conversation.yml', 'r', encoding='utf-8') as f:
+        origin = f.readlines()
+    asking = []
+    answer = []
+    for line in origin:
+        if line[:4] == '- - ':
+            asking.append(eval(line[4:]))
+        else:
+            answer.append(line[4:])
+    del origin
+
+    return True
+
+
 def split_sentence(sentence: str) -> list:
     """
     将句子分割为词语。
@@ -113,20 +131,28 @@ def reply_conversation(input_str: str) -> str:
             pass
     if length != 0:
         input_vec /= length
-    
+
     if np.linalg.norm(input_vec) == 0:
         reply = '这个话题二澪还听不懂呢'
     else:
         similarities = []
         for vec in asking:
             similarities.append(compare(input_vec, vec))
-        reply_index = similarities.index(max(similarities))
+
+        # 在权重相同的所有回答中随机选择一个
+        max_sim = max(similarities)
+        reply_indexs = []
+        while max(similarities) == max_sim:
+            reply_indexs.append(similarities.index(max(similarities)))
+            similarities[reply_indexs[-1]] = 0
+        reply_index = reply_indexs[random.randint(0, len(reply_indexs) - 1)]
+
+        # 7%的概率丢弃当前回答，选择下一个最高相似度的回答，重复4次得到最终回答
         for times in range(4):
-            # 10%的概率丢弃当前回答，选择下一个最高相似度的回答，重复4次得到最终回答
-            i = random.randint(0, 9)
-            if i == 0:
-                similarities[reply_index] = 0
+            i = random.randint(0, 99)
+            if i < 7:
                 reply_index = similarities.index(max(similarities))
+                similarities[reply_index] = 0
 
         reply = answer[reply_index][:-1]
 
