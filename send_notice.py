@@ -5,6 +5,7 @@ from bot_func.send import *
 from bot_func.constant import *
 from bot_func.account import view_account
 import os
+from bot_func.weather import get_weather
 
 
 def send_notice(user_id: int):
@@ -79,6 +80,10 @@ def life_left():
                 send_message(string)
                 time.sleep(5 + random.random())
                 view_account()
+                time.sleep(5 + random.random())
+                wea = get_weather()
+                if wea != 'null':
+                    send_group(wea, group_id)
                 rec = records[0] + ' yes'
                 with open(data_path + 'life_left', 'w', encoding='utf-8') as f:
                     f.write(rec)
