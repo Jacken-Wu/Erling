@@ -51,7 +51,7 @@
 
     端口号可更改，对应 main.py 以及 bot_func/send.py 代码中的端口号也改为相应值；
 
-2. 安装任意版本的 python3 并安装以下 python 库: numpy, jieba, gensim；
+2. 安装任意版本的 python3 并安装以下 python 库: numpy, jieba, gensim, lxml；
 3. 下载最新版本的压缩包 [release](https://github.com/Jacken-Wu/Erling/releases) 并解压；
 4. 第一次运行时先运行初始化程序 init.py，设置数据文件存储路径（注：输入的路径必须是已存在的路径，否则会报错），若要更改数据文件存储路径，可以编辑程序目录中的 data_path.config 文件，或再次运行 init.py，再次运行init.py 文件时已有数据不会被重置，但以防万一请在运行 init.py 前先备份；
 5. 配置数据文件存储路径下的 constant.config 文件，其中百度翻译的 appid 和 key 自行申请，如不需要此功能则忽略此项设置；
