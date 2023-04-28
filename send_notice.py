@@ -112,7 +112,10 @@ def video_loader():
             if v_link[-1] == '\n':
                 v_link = v_link[:-1]
             BiliScratch(v_link)
-            send_video(v_link)
+            if send_video(v_link):
+                print('Send video successfully.')
+            else:
+                print('Send video failed.')
             clean_video_temp()
 
             with open(todo_path, 'r', encoding='utf-8') as f:
