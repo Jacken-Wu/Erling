@@ -17,6 +17,7 @@ from bot_func.chat import reply_conversation, save_chat, update_conversation, ge
 from bot_func.erhelp import *
 from bot_func.say_hi import *
 from bot_func.respond import respond_group
+from bot_func.biliVideo import add_video_todo
 
 
 ListenSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -219,7 +220,7 @@ while True:
             save_chat(input_str, reply)
         
         elif 'b23.tv' in gro_mess:
-            print(gro_mess)
+            add_video_todo(gro_mess)
 
         elif (user_id in responds) and (len(gro_mess) > 0):
             respond_group(gro_mess)

@@ -39,12 +39,6 @@ if 'trainning' not in existed_data_files1:
 if 'video_temp' not in existed_data_files1:
     os.mkdir(data_path + 'video_temp')
 
-existed_data_files2 = os.listdir(data_path + 'trainning/')
-if 'conversation' not in existed_data_files2:
-    os.mkdir(data_path + 'trainning/conversation')
-if 'text' not in existed_data_files2:
-    os.mkdir(data_path + 'trainning/text')
-
 need_files = ['account', 'chat.log', 'food_list', 'music', 'privates', 'responds']
 for file in need_files:
     if file not in existed_data_files1:
@@ -59,6 +53,12 @@ if 'repeat_temp' not in existed_data_files1:
 if 'songs.xml' not in existed_data_files1:
     new_file(data_path, 'songs.xml', ["<?xml version='1.0' encoding='utf-8'?>\n", '<songs>\n', '</songs>\n'])
 
+existed_data_files2 = os.listdir(data_path + 'trainning/')
+if 'conversation' not in existed_data_files2:
+    os.mkdir(data_path + 'trainning/conversation')
+if 'text' not in existed_data_files2:
+    os.mkdir(data_path + 'trainning/text')
+
 if len(os.listdir(data_path + 'trainning/conversation/')) == 0:
     shutil.copyfile('./init_files/conversation_example.yml', data_path + 'trainning/conversation/conversation_example.yml')
 if len(os.listdir(data_path + 'trainning/text/')) == 0:
@@ -69,6 +69,8 @@ if os.path.exists(data_path + 'constant.config') == False:
     shutil.copyfile('./init_files/constant.config', data_path + 'constant.config')
 if os.path.exists(data_path + 'database_conversation.yml') == False:
     shutil.copyfile('./init_files/database_conversation_example.yml', data_path + 'database_conversation.yml')
+if os.path.exists(data_path + 'video_temp/todo') == False:
+    new_file(data_path + 'video_temp/', 'todo')
 
 print('初始化成功，请查看/更改%sconstant.config中的信息' % data_path)
 input('按下Enter键继续')

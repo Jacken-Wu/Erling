@@ -1,11 +1,13 @@
 import time
 import random
 from xml.etree.ElementPath import prepare_descendant
+from bot_func.biliVideo import BiliScratch, send_video
 from bot_func.send import *
 from bot_func.constant import *
 from bot_func.account import view_account
 import os
 from bot_func.weather import get_weather
+from bot_func.biliVideo import add_video_todo, BiliScratch, send_video, clean_video_temp
 
 
 def send_notice(user_id: int):
@@ -97,6 +99,29 @@ def life_left():
             f.write(rec)
 
 
+def video_loader():
+    """
+    从todo列表获得link，下载并发送视频到群聊。
+    """
+    todo_path = data_path + 'video_temp/todo'
+    if os.path.exists(todo_path):
+        with open(todo_path, 'r', encoding='utf-8') as f:
+            v_links = f.readlines()
+        if len(v_links) > 0:
+            v_link = v_links[0]
+            if v_link[-1] == '\n':
+                v_link = v_link[:-1]
+            BiliScratch(v_link)
+            send_video(v_link)
+            clean_video_temp()
+
+            with open(todo_path, 'r', encoding='utf-8') as f:
+                v_links = f.readlines()
+            del v_links[0]
+            with open(todo_path, 'w', encoding='utf-8') as f:
+                f.writelines(v_links)
+
+
 if __name__ == '__main__':
     counter = 0
     while True:
@@ -112,5 +137,6 @@ if __name__ == '__main__':
             send_notice(user_id)
         show_music(group_id)
         life_left()
+        video_loader()
         time.sleep(9 + random.random())
         counter -= 1

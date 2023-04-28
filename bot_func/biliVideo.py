@@ -8,13 +8,13 @@ from bot_func.send import send_group
 
 
 video_path = data_path + 'video_temp/'
-count = 0
 
 
-def BiliScratch(url: str):
+def BiliScratch(v_link: str):
     """
-    输入视频分享地址，下载B站视频。
+    输入视频分享地址b23.tv后面的字符串，下载B站视频。
     """
+    url = 'https://b23.tv/' + v_link
     headers = {
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36',
         'referer': 'https://www.bilibili.com/'
@@ -39,11 +39,9 @@ def BiliScratch(url: str):
             with open(f'{video_path}temp.mp4', mode = 'wb') as f:
                 f.write(video_content)
 
-            cmd = f'ffmpeg -i {video_path}temp.mp3 -i {video_path}temp.mp4 -acodec copy -vcodec copy {video_path}share{count}.mp4 -y'
+            cmd = f'ffmpeg -i {video_path}temp.mp3 -i {video_path}temp.mp4 -acodec copy -vcodec copy {video_path}share_{v_link}.mp4 -y'
             print(cmd)
             subprocess.call(cmd, shell = True)
-
-            count += 1
 
             return True
     else:
@@ -60,20 +58,45 @@ def clean_video_temp():
         os.remove(video_path + 'temp.mp4')
 
 
-def send_video():
+def send_video(v_link):
     """
     发送下载好的视频到群聊。
     """
-    if os.path.exists(video_path + 'share' + str(count) + '.mp4'):
-        cq_code = f'[CQ:video,file=file://{video_path + video_id}.mp4]'
+    if os.path.exists(video_path + 'share' + v_link + '.mp4'):
+        cq_code = f'[CQ:video,file=file:///{video_path}share_{v_link}.mp4]'
         send_group(cq_code, group_id)
         return True
     else:
         return False
 
 
+def link_cmp(gro_mess: str):
+    """
+    输入群聊的消息，从中得到分享链接。
+    """
+    gro_mess = gro_mess.replace('\\', '')
+    v_links = re.findall('b23.tv/(.*?)\?', gro_mess)
+    print(v_links)
+    v_link = ''
+    if len(v_links) > 0:
+        v_link = v_links[0]
+    return v_link
+
+
+def add_video_todo(gro_mess):
+    """
+    分析群聊消息，得到分享链接，添加到视频下载列表。
+    """
+    todo_path = video_path + 'todo'
+    v_link = link_cmp(gro_mess)
+    if v_link != '':
+        with open(todo_path, 'a', encoding='utf-8') as f:
+            f.write(v_link + '\n')
+
+
 if __name__ == '__main__':
-    video_id = input("请输入AV/BV号: ")
-    BiliScratch(video_id)
-    # send_video()
+    pass
+    # v_link = input("请输入地址号: ")
+    # BiliScratch(v_link)
+    # send_video(v_link)
     # clean_video_temp()
