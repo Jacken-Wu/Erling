@@ -1,13 +1,11 @@
 import time
 import random
-from xml.etree.ElementPath import prepare_descendant
-from bot_func.biliVideo import BiliScratch, send_video
 from bot_func.send import *
 from bot_func.constant import *
 from bot_func.account import view_account
 import os
 from bot_func.weather import get_weather
-from bot_func.biliVideo import add_video_todo, BiliScratch, send_video, clean_video_temp
+from bot_func.biliVideo import BiliScratch, send_video, clean_video_temp
 
 
 def send_notice(user_id: int):
