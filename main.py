@@ -217,6 +217,9 @@ while True:
             reply = reply_conversation(input_str)
             send_group(reply, group_id)
             save_chat(input_str, reply)
+        
+        elif 'b23.tv' in gro_mess:
+            print(gro_mess)
 
         elif (user_id in responds) and (len(gro_mess) > 0):
             respond_group(gro_mess)

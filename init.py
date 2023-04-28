@@ -36,6 +36,8 @@ if 'notice' not in existed_data_files1:
     os.mkdir(data_path + 'notice')
 if 'trainning' not in existed_data_files1:
     os.mkdir(data_path + 'trainning')
+if 'video_temp' not in existed_data_files1:
+    os.mkdir(data_path + 'video_temp')
 
 existed_data_files2 = os.listdir(data_path + 'trainning/')
 if 'conversation' not in existed_data_files2:
