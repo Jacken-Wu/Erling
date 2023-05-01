@@ -219,7 +219,7 @@ while True:
             send_group(reply, group_id)
             save_chat(input_str, reply)
         
-        elif 'b23.tv' in gro_mess:
+        elif ('b23.tv' in gro_mess) or ('bilibili.com/video' in gro_mess):
             add_video_todo(gro_mess)
 
         elif (user_id in responds) and (len(gro_mess) > 0):

@@ -12,9 +12,11 @@ video_path = data_path + 'video_temp/'
 
 def BiliScratch(v_link: str):
     """
-    输入视频分享地址b23.tv后面的字符串，下载B站视频。
+    输入视频分享地址b23.tv后面的字符串，或BV号/AV号，下载B站视频。
     """
     url = 'https://b23.tv/' + v_link
+    if v_link[:2] in ['BV', 'bv', 'AV', 'av']:
+        url = 'https://bilibili.com/video/' + v_link
     headers = {
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36',
         'referer': 'https://www.bilibili.com/'
@@ -45,6 +47,7 @@ def BiliScratch(v_link: str):
 
             return True
     else:
+        print("Response:", resp.status_code)
         return False
 
 
@@ -76,10 +79,23 @@ def link_cmp(gro_mess: str):
     """
     gro_mess = gro_mess.replace('\\', '')
     v_links = re.findall('b23.tv/(.*?)\?', gro_mess)
+    if v_links == []:
+        gro_mess_2 = gro_mess + '?'
+        v_links = re.findall('b23.tv/(.*?)\?', gro_mess_2)
+    if v_links == []:
+        v_links = re.findall('bilibili.com/video/(.*?)\?', gro_mess)
+    if v_links == []:
+        gro_mess_2 = gro_mess + '?'
+        v_links = re.findall('bilibili.com/video/(.*?)\?', gro_mess_2)
     print(v_links)
     v_link = ''
     if len(v_links) > 0:
         v_link = v_links[0]
+        # 去掉链接后可能存在的“/”“\”
+        while (v_link[-1] == '/') or (v_link[-1] == '\\'):
+            v_link = v_link[:-1]
+            if v_link == '':
+                break
     return v_link
 
 
