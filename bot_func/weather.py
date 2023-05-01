@@ -2,6 +2,7 @@ import requests
 from lxml import etree
 import time
 import random
+from bot_func.constant import weather_id
 
 
 def get_weather():
@@ -14,7 +15,7 @@ def get_weather():
     sky = 'null'
     sport = 'null'
     wear = 'null'
-    page = requests.get('http://www.weather.com.cn/weather1d/101043800.shtml')
+    page = requests.get('http://www.weather.com.cn/weather1d/%s.shtml' % weather_id)
     if page.status_code == 200:
         page.encoding = 'utf-8'
         page_html = etree.HTML(page.text)
@@ -51,7 +52,7 @@ def get_weather():
                 wear = wear[0]
 
     time.sleep(3 + random.random())
-    page2 = requests.get('http://www.weather.com.cn/weather/101043800.shtml')
+    page2 = requests.get('http://www.weather.com.cn/weather/%s.shtml' % weather_id)
     if page2.status_code == 200:
         page2.encoding = 'utf-8'
         page_html = etree.HTML(page2.text)

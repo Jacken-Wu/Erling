@@ -12,6 +12,10 @@ appid = ''
 key = ''
 salt = ''
 
+# 天气网(http://www.weather.com.cn/)对应城市的代码
+weather_id = ''
+
+# 二澪商店
 store = {}
 
 with open('./data_path.config', 'r', encoding='utf-8') as f:
@@ -46,6 +50,8 @@ for config in config_list:
             key = config_temp[1]
         elif config_temp[0] == 'salt':
             salt = config_temp[1]
+        elif config_temp[0] == 'weather_id':
+            weather_id = config_temp[1]
         else:
             store[config_temp[0]] = int(config_temp[1])
 
@@ -71,10 +77,11 @@ print('begin:', begin)
 print('end:', end)
 print('appid:', appid)
 if len(key) > 6:
-    print('key: ', key[:3] + '****' + key[-3:])
+    print('key:', key[:3] + '****' + key[-3:])
 else:
-    print('key: ', key)
-print('salt: ', salt)
+    print('key:', key)
+print('salt:', salt)
+print('weather_id:', weather_id)
 print('store:', store)
 print('responds:', responds)
 print('privates:', privates)
