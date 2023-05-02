@@ -1,4 +1,23 @@
+<p align="center">
+    <img src="./cover.png" alt="icon" width="200" height="200">
+</p>
+
+<div align="center">
+
 # 二澪(Erling)
+
+</div>
+<p align="center">
+    <a href="https://raw.githubusercontent.com/Jacken-Wu/Erling/master/LICENSE">
+        <img src="https://img.shields.io/github/license/Jacken-Wu/Erling" alt="license">
+    </a>
+    <a href="https://github.com/Jacken-Wu/Erling/releases">
+        <img src="https://img.shields.io/github/v/release/Jacken-Wu/Erling?color=blueviolet&include_prereleases" alt="release">
+    </a>
+    <a href="https://www.python.org">
+        <img src="https://img.shields.io/badge/language-python3-blue.svg" alt="python3">
+    </a>
+</p>
 
 ## 目录
 
@@ -10,7 +29,7 @@
 
 ## 描述
 
-本项目为某VOCALOID群的群聊机器人python代码。  
+本项目为某 VOCALOID 群的群聊机器人 python 代码。  
 
 ## 工作目录
 
