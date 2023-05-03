@@ -9,6 +9,7 @@ def get_weather():
     """
     获取今日或明天的昼间天气信息并返回天气预报字符串。
     """
+    city = ''
     day = 'null'
     wea = 'null'
     tem = 'null'
@@ -19,6 +20,14 @@ def get_weather():
     if page.status_code == 200:
         page.encoding = 'utf-8'
         page_html = etree.HTML(page.text)
+
+        city_temp = page_html.xpath('//div[@class="crumbs fl"]/a/text()')
+        city_temp2 = page_html.xpath('//div[@class="crumbs fl"]/span/text()')
+        if len(city_temp) == 2:
+            city += city_temp[1]
+        if len(city_temp2) == 3:
+            city += city_temp2[2]
+
         li_nodes = page_html.xpath('//div[@class="t"]/ul[@class="clearfix"]/li')
         for li_node in li_nodes:
             title_list =  li_node.xpath('h1/text()')
@@ -92,7 +101,7 @@ def get_weather():
         print('null')
         return 'null'
     else:
-        back = ''
+        back = city
         if day != 'null':
             back += day + '日昼间'
         if wea != 'null':
