@@ -22,28 +22,31 @@ def BiliScratch(v_link: str):
         'referer': 'https://www.bilibili.com/'
     }
 
-    resp = requests.get(url = url, headers = headers)
+    resp = requests.get(url=url, headers=headers)
 
     if resp.status_code == 200:
-        playinfos = re.findall("<script>window.__playinfo__=(.*?)</script>", resp.text)
+        playinfos = re.findall(
+            "<script>window.__playinfo__=(.*?)</script>", resp.text)
         if len(playinfos) > 0:
-            playinfo = playinfos[0] #播放信息读取
-            pinfo_json = json.loads(playinfo) #转为python的字典格式
+            playinfo = playinfos[0]  # 播放信息读取
+            pinfo_json = json.loads(playinfo)  # 转为python的字典格式
 
             audio_url = pinfo_json['data']['dash']['audio'][0]['baseUrl']
             video_url = pinfo_json['data']['dash']['video'][0]['baseUrl']
 
-            audio_content = requests.get(url = audio_url, headers = headers).content
-            video_content = requests.get(url = video_url, headers = headers).content
+            audio_content = requests.get(
+                url=audio_url, headers=headers).content
+            video_content = requests.get(
+                url=video_url, headers=headers).content
 
-            with open(f'{video_path}temp.mp3', mode = 'wb') as f:
+            with open(f'{video_path}temp.mp3', mode='wb') as f:
                 f.write(audio_content)
-            with open(f'{video_path}temp.mp4', mode = 'wb') as f:
+            with open(f'{video_path}temp.mp4', mode='wb') as f:
                 f.write(video_content)
 
             cmd = f'ffmpeg -i {video_path}temp.mp3 -i {video_path}temp.mp4 -acodec copy -vcodec copy {video_path}share_{v_link}.mp4 -y'
             print(cmd)
-            subprocess.call(cmd, shell = True)
+            subprocess.run(cmd, shell=True)
 
             return True
     else:
@@ -59,6 +62,21 @@ def clean_video_temp():
         os.remove(video_path + 'temp.mp3')
     if os.path.exists(video_path + 'temp.mp4'):
         os.remove(video_path + 'temp.mp4')
+
+
+def clean_video():
+    """
+    清理下载视频。
+    """
+    files = os.listdir(video_path)
+    length = len(files)
+    if length > 1:
+        subprocess.run(f'rm {video_path}share_*', shell=True)
+    files = os.listdir(video_path)
+    if (len(files) == 1) and (files[0] == 'todo'):
+        return length - 1
+    else:
+        return -1
 
 
 def send_video(v_link):

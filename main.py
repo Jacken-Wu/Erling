@@ -17,7 +17,7 @@ from bot_func.chat import reply_conversation, save_chat, update_conversation, ge
 from bot_func.erhelp import *
 from bot_func.say_hi import *
 from bot_func.respond import respond_group
-from bot_func.biliVideo import add_video_todo
+from bot_func.biliVideo import add_video_todo, clean_video
 
 
 ListenSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -70,6 +70,12 @@ while True:
                 love = read_love(father_id)
                 back = 'love值!%d!' % love
                 send_message(back)
+            elif pri_mess == '清除视频缓存':
+                num = clean_video()
+                if num == -1:
+                    send_message('清理出现问题，请后台检查')
+                else:
+                    send_message('以清理%d条视频缓存' % num)
 
             elif len(pri_mess) >= 4 and pri_mess[:4] == 'help':
                 help_func = pri_mess.split()[1:]

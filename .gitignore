@@ -2,3 +2,4 @@ bot_func/__pycache__
 data_path.config
 test_on_linux.py
 test_on_win.py
+data_test

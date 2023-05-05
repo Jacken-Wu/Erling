@@ -125,6 +125,9 @@
     1. 词向量训练请调用 chat.py 中的 generate_vec() 函数，运行前请将训练文本放在数据文件存储路径（默认 ./data/）下的 trainning/text 文件夹内，训练好的模型为 model_word2vec 文件；
     2. 对话库生成请调用 chat.py 中的 generate_conversation() 函数，运行前请将训练文本放在数据文件存储路径（默认 ./data/）下的 trainning/conversation 文件夹内，生成的对话库为 database_conversation.yml 文件。
 
+* 清除视频缓存  
+    删除下载的所有视频资源
+
 #### 群聊指令
 
 [群聊指令介绍网页](https://jacken-wu.github.io/Erhelp/)
