@@ -75,7 +75,7 @@ while True:
                 if num == -1:
                     send_message('清理出现问题，请后台检查')
                 else:
-                    send_message('以清理%d条视频缓存' % num)
+                    send_message('以清理%d条视频缓存' % (num // 2))
 
             elif len(pri_mess) >= 4 and pri_mess[:4] == 'help':
                 help_func = pri_mess.split()[1:]
