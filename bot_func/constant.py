@@ -2,6 +2,7 @@ data_path = ''
 father_id = 0
 self_id = 0
 group_id = 0
+last_user = 123456789
 
 # 出生死亡日期
 begin = 0
@@ -17,6 +18,12 @@ weather_id = ''
 
 # 二澪商店
 store = {}
+
+# 有应和功能权限的用户
+responds = []
+# 有私聊功能权限的用户
+privates = []
+
 
 with open('./data_path.config', 'r', encoding='utf-8') as f:
     data_path = f.readline()
@@ -56,13 +63,11 @@ for config in config_list:
             store[config_temp[0]] = int(config_temp[1])
 
 
-responds = []
 with open(data_path + 'responds', 'r', encoding='utf-8') as f:
     datas = f.readlines()
     for data in datas:
         responds.append(int(data))
 
-privates = []
 with open(data_path + 'privates', 'r', encoding='utf-8') as f:
     datas = f.readlines()
     for data in datas:

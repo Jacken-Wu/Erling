@@ -72,7 +72,7 @@ def help_private(msg_list: list, user_id: int) -> None:
 def help_group(msg_list: list, group_id: int) -> None:
     back = 'erhelp XXX'
     if (len(msg_list) == 0) or (len(msg_list) >= 2):
-        back = 'erhelp XXX\n推歌/点歌/添加歌曲/errand/添加食物/删除食物/吃啥/erlove/商店/购买/背包/改名/应和卡/ertrans/私聊卡\n或查看https://jacken-wu.github.io/Erhelp/'
+        back = 'erhelp XXX\n推歌/点歌/添加歌曲/errand/添加食物/删除食物/吃啥/erlove/商店/购买/背包/改名/应和卡/ertrans/私聊卡/天气\n或查看https://jacken-wu.github.io/Erhelp/'
     elif msg_list[1] == '推歌':
         back = '二澪 推歌 [t:类型] [s:歌手] [p:P主]'
     elif msg_list[1] == '点歌':
@@ -103,4 +103,6 @@ def help_group(msg_list: list, group_id: int) -> None:
         back = '二澪 任意语句（回复英文翻译）'
     elif msg_list[1] == '私聊卡':
         back = '二澪 私聊卡'
+    elif msg_list[1] == '天气':
+        back = '二澪 天气'
     send_group(back, group_id)

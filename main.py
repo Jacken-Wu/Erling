@@ -1,7 +1,5 @@
 import json
 import socket
-import time
-import random
 from bot_func.notice import *
 from bot_func.account import *
 from bot_func.send import *
@@ -18,6 +16,7 @@ from bot_func.erhelp import *
 from bot_func.say_hi import *
 from bot_func.respond import respond_group
 from bot_func.biliVideo import add_video_todo, clean_video
+from bot_func.weather import get_weather
 
 
 ListenSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -182,7 +181,7 @@ while True:
         elif gro_mess in ['晚安群友', '群友晚安', '晚安', '睡了', '晚安二澪', '二澪晚安']:
             evening_group(user_id)
 
-        elif gro_mess[: 3] == '二澪 ':
+        elif gro_mess[:3] == '二澪 ':
             add_love(user_id, 2)
             info = gro_mess.split()[1:]
             if len(info) == 0:
@@ -215,11 +214,16 @@ while True:
             elif info[0] in ['商店', '购买', '背包', '改名', '应和卡', '私聊卡']:
                 deal_store(info, user_id)
 
+            elif info[0] == '天气':
+                wea = get_weather()
+                send_group(wea, group_id)
+
             else:
                 back = auto2en(gro_mess[3:])
                 send_group(back, group_id)
 
         elif (gro_mess[:3] == '二澪，' or gro_mess[:3] == '二澪,') and len(gro_mess) > 3:
+            add_love(user_id, 2)
             input_str = gro_mess[3:]
             reply = reply_conversation(input_str)
             send_group(reply, group_id)
@@ -228,11 +232,22 @@ while True:
         elif ('b23.tv' in gro_mess) or ('bilibili.com/video' in gro_mess):
             add_video_todo(gro_mess)
 
+        elif user_id == last_user:
+            add_love(user_id, 1)
+            reply = reply_conversation(gro_mess)
+            send_group(reply, group_id)
+            save_chat(gro_mess, reply)
+
         elif (user_id in responds) and (len(gro_mess) > 0):
             respond_group(gro_mess)
-        
+
         else:
             repeat(gro_mess)
+
+        # 下一句是否需要回答的标志
+        last_user = 123456789
+        if gro_mess == '二澪':
+            last_user = user_id
 
     elif message['post_type'] == 'notice':
             if 'group_id' in message and message['group_id'] == group_id:
