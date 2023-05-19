@@ -31,7 +31,7 @@ def json_to_dic(json_text):
     return None
 
 
-def get_message():
+def get_message() -> dict:
     conn, addr = ListenSocket.accept()
     mes = json_to_dic(conn.recv(4096).decode('utf-8', 'ignore'))
     return mes

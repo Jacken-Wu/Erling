@@ -107,13 +107,15 @@ def video_loader():
             v_links = f.readlines()
         if len(v_links) > 0:
             v_link = v_links[0]
-            if v_link[-1] == '\n':
+            while v_link[-1] == '\n':
                 v_link = v_link[:-1]
             BiliScratch(v_link)
+            time.sleep(1)
             if send_video(v_link):
                 print('Send video successfully.')
             else:
                 print('Send video failed.')
+            time.sleep(1)
             clean_video_temp()
 
             with open(todo_path, 'r', encoding='utf-8') as f:

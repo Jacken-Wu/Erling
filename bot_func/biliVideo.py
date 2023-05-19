@@ -84,9 +84,9 @@ def send_video(v_link):
     发送下载好的视频到群聊。
     """
     if os.path.exists(video_path + 'share_' + v_link + '.mp4'):
-        cq_code = f'[CQ:video,file=file:///{video_path}share_{v_link}.mp4]'
-        send_group(cq_code, group_id)
-        return True
+        cq_code = f'[CQ:video,file=file://{video_path}share_{v_link}.mp4]'
+        is_send = send_group(cq_code, group_id)
+        return is_send
     else:
         return False
 
