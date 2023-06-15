@@ -5,7 +5,7 @@ from bot_func.account import *
 from bot_func.send import *
 from bot_func.repeat import repeat
 from bot_func.constant import *
-from bot_func.random_song import add4father, add4normal, push_song, order_song
+from bot_func.random_song import add4father_group, add4father_private, add4normal_group, add4normal_private, push_song, order_song
 from bot_func.errand import *
 from bot_func.what_eat import rand_food, add_food_main, del_food_main
 from bot_func.erlove import *
@@ -98,7 +98,7 @@ while True:
                         del_music(message['message'][5:])
                     elif pri_mess[:4] == '添加歌曲':
                         info = message['message'][5:].split()
-                        add4father(info)
+                        add4father_private(info)
                     elif pri_mess[:4] == '通过好友':
                         flag = pri_mess[5:]
                         set_friend(flag)
@@ -133,7 +133,7 @@ while True:
                     elif pri_mess[:4] == '添加歌曲':
                         add_love(user_id, 1)
                         info = pri_mess[5:].split()
-                        add4normal(info, user_id)
+                        add4normal_private(info, user_id)
                     add_love(user_id, 1)
                 except:
                     send_private('语法错误', user_id)
@@ -147,7 +147,7 @@ while True:
                     if pri_mess[:4] == '添加歌曲':
                         add_love(user_id, 2)
                         info = pri_mess[5:].split()
-                        add4normal(info, user_id)
+                        add4normal_private(info, user_id)
                 except:
                     send_private('语法错误', user_id)
 
@@ -197,7 +197,10 @@ while True:
 
             elif info[0] == '添加歌曲':
                 info = info[1:]
-                add4normal(info, user_id)
+                if user_id == father_id:
+                    add4father_group(info, group_id)
+                else:
+                    add4normal_group(info, user_id, group_id)
             
             elif info[0] == '添加食物':
                 info = info[1:]

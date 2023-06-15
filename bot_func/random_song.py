@@ -108,7 +108,7 @@ def add_song(title: str, url: str, song_tag: str, singer: str, p: str) -> bool:
         return True
 
 
-def add4father(info: list) -> None:
+def add4father_private(info: list) -> None:
     """
     管理者添加歌曲。
     """
@@ -127,7 +127,7 @@ def add4father(info: list) -> None:
         send_message('语法错误')
 
 
-def add4normal(info: list, user_id: int) -> None:
+def add4normal_private(info: list, user_id: int) -> None:
     """
     普通用户添加歌曲。
     """
@@ -136,6 +136,36 @@ def add4normal(info: list, user_id: int) -> None:
         send_private('已提交', user_id)
     else:
         send_private('格式好像一些问题呢', user_id)
+
+
+def add4father_group(info: list, group_id: int) -> None:
+    """
+    管理者添加歌曲。
+    """
+    if len(info) >= 5:
+        title = ' '.join(info[:-4])
+        url = info[-4]
+        s_tag = info[-3].replace(',', ' ')
+        singer = info[-2].replace(',', ' ')
+        p = info[-1].replace(',', ' ')
+        back = add_song(title, url, s_tag, singer, p)
+        if back:
+            send_group('添加完成', group_id)
+        else:
+            send_group('添加失败', group_id)
+    else:
+        send_group('语法错误', group_id)
+
+
+def add4normal_group(info: list, user_id: int, group_id: int) -> None:
+    """
+    普通用户添加歌曲。
+    """
+    if len(info) >= 5:
+        send_message(str(user_id) + ': 添加歌曲 ' + ' '.join(info))
+        send_group('已提交', group_id)
+    else:
+        send_group('格式好像一些问题呢', group_id)
 
 
 def push_song(infos: list) -> None:
