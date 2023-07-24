@@ -15,7 +15,7 @@ answer = []
 for line in origin:
     if line[:4] == '- - ':
         asking.append(eval(line[4:]))
-    else:
+    elif line[:4] == '  - ':
         answer.append(line[4:])
 del origin
 
@@ -34,7 +34,7 @@ def update_conversation() -> bool:
     for line in origin:
         if line[:4] == '- - ':
             asking.append(eval(line[4:]))
-        else:
+        elif line[:4] == '  - ':
             answer.append(line[4:])
     del origin
 
@@ -50,7 +50,7 @@ def split_sentence(sentence: str) -> list:
     return words
 
 
-def generate_vec() -> True:
+def generate_vec() -> bool:
     """
     生成并保存词向量模型。生成的模型保存在用户自定的data_path下。
     """
