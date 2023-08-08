@@ -126,6 +126,9 @@ def video_loader():
 
 
 if __name__ == '__main__':
+    with open(data_path + 'video_temp/todo', 'w', encoding='utf-8') as f:
+        pass  # 清除之前未完成的视频队列
+
     counter = 0
     while True:
         if counter == 0:
@@ -135,7 +138,7 @@ if __name__ == '__main__':
                 datas = f.readlines()
                 for data in datas:
                     privates.append(int(data))
-    
+
         for user_id in privates:
             send_notice(user_id)
         show_music(group_id)
