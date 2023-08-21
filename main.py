@@ -242,7 +242,7 @@ while True:
             save_chat(gro_mess, reply)
 
         elif (user_id in responds) and (len(gro_mess) > 0):
-            respond_group(gro_mess)
+            respond_group(user_id, gro_mess)
 
         else:
             repeat(gro_mess)
