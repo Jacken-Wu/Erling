@@ -220,6 +220,13 @@ while True:
             elif info[0] == '天气':
                 wea = get_weather()
                 send_group(wea, group_id)
+            
+            elif info[0] == '应和':
+                if len(info) == 1:
+                    send_group('格式好像不对哦', group_id)
+                else:
+                    set_respond(user_id, ' '.join(info[1:]))
+                    send_group('设置成功啦！', group_id)
 
             else:
                 back = auto2en(gro_mess[3:])
