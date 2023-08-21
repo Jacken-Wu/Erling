@@ -260,7 +260,7 @@ def set_respond(user_id: int, back_words: str) -> bool:
         user = root.find('./user[@id="%d"]' % user_id)
         respond_words = user.find('respond_words')
         if respond_words == None:
-            respond_words = et.Element('item')
+            respond_words = et.Element('respond_words')
             respond_words.text = back_words
             user.append(respond_words)
             tree.write(love_tree, encoding='utf-8', xml_declaration=True)
