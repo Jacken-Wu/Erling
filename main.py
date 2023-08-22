@@ -168,7 +168,7 @@ while True:
             elif gro_mess[:6] == 'errand':
                 add_love(user_id, 2)
                 errand(gro_mess.split()[1:])
-            
+
             elif gro_mess[:6] == 'erlove':
                 call = read_name(user_id)
                 love = read_love(user_id)
@@ -201,11 +201,11 @@ while True:
                     add4father_group(info, group_id)
                 else:
                     add4normal_group(info, user_id, group_id)
-            
+
             elif info[0] == '添加食物':
                 info = info[1:]
                 add_food_main(info)
-                    
+
             elif info[0] == '删除食物':
                 info = info[1:]
                 del_food_main(info)
@@ -220,13 +220,16 @@ while True:
             elif info[0] == '天气':
                 wea = get_weather()
                 send_group(wea, group_id)
-            
-            elif info[0] == '应和':
+
+            elif info[0] == '应和语':
                 if len(info) == 1:
-                    send_group('格式好像不对哦', group_id)
+                    send_group('格式好像有问题呢', group_id)
                 else:
-                    set_respond(user_id, ' '.join(info[1:]))
-                    send_group('设置成功啦！', group_id)
+                    is_set = set_respond(user_id, ' '.join(info[1:]))
+                    if is_set:
+                        send_group('设置成功啦！', group_id)
+                    else:
+                        send_group('设置出错啦', group_id)
 
             else:
                 back = auto2en(gro_mess[3:])
@@ -238,7 +241,7 @@ while True:
             reply = reply_conversation(input_str)
             send_group(reply, group_id)
             save_chat(input_str, reply)
-        
+
         elif ('b23.tv' in gro_mess) or ('bilibili.com/video' in gro_mess):
             add_video_todo(gro_mess)
 
@@ -268,7 +271,7 @@ while True:
                     new_id = message['user_id']
                     message_send = '[CQ:at,qq=%d]举朵小花欢迎你！' % new_id
                     send_group(message_send, group_id)
-                
+
                 # 戳一戳
                 elif no_type == 'notify' and message['sub_type'] == 'poke' and message['target_id'] == self_id:
                     poke_id = message['user_id']

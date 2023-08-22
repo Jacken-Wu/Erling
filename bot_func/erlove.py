@@ -6,7 +6,7 @@ from bot_func.send import send_group
 love_tree = data_path + 'loves.xml'
 
 
-def create_user(user_id: int, num: int) -> bool:
+def create_user(user_id: int, num: int) -> None:
     """
     创建用户。
     """
@@ -45,7 +45,7 @@ def add_love(user_id: int, num: int) -> None:
         love.text = str(love_num + num)
         tree.write(love_tree, encoding='utf-8', xml_declaration=True)
 
-        
+
 def read_love(user_id: int) -> int:
     """
     读取QQ号为user_id的用户的erlove值。
@@ -89,7 +89,7 @@ def buy_item(user_id: int, item_name: str) -> bool:
         if root.find('./user[@id="%d"]' % user_id) == None:  # 当前用户还没有录入
             create_user(user_id, 0)
             return False
-        
+
         else:
             price = store[item_name]
             user = root.find('./user[@id="%d"]' % user_id)
@@ -107,7 +107,7 @@ def buy_item(user_id: int, item_name: str) -> bool:
                     items = item.text.split()
                     items.append(item_name)
                     item.text = ' '.join(items)
-                
+
                 love.text = str(user_love - price)
                 tree.write(love_tree, encoding='utf-8', xml_declaration=True)
                 return True
