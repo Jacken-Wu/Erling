@@ -9,7 +9,7 @@ def errand(list_input: list) -> None:
         sel = randint(0, max)
         send_group(list_input[sel], group_id)
     else:
-        pass
+        send_group('什么参数都没有，说点什么吧', group_id)
 
 
 if __name__ == '__main__':

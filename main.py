@@ -160,16 +160,17 @@ while True:
             hi_group(user_id)
 
         elif gro_mess[:2] == 'er':
-            if gro_mess[:6] == 'erhelp':
+            gro_mess_list = gro_mess.split()
+            if gro_mess_list[0] == 'erhelp':
                 add_love(user_id, 1)
-                erhelp = gro_mess.split()[1:]
+                erhelp = gro_mess_list[1:]
                 help_group(erhelp, group_id)
 
-            elif gro_mess[:6] == 'errand':
+            elif gro_mess_list[0] == 'errand':
                 add_love(user_id, 2)
-                errand(gro_mess.split()[1:])
+                errand(gro_mess_list[1:])
 
-            elif gro_mess[:6] == 'erlove':
+            elif gro_mess_list[0] == 'erlove' and len(gro_mess_list) == 1:
                 call = read_name(user_id)
                 love = read_love(user_id)
                 back = '[CQ:at,qq=%d]二澪对%s的love值为%d' % (user_id, call, love)
