@@ -11,7 +11,7 @@ from bot_func.what_eat import rand_food, add_food_main, del_food_main
 from bot_func.erlove import *
 from bot_func.ertrans import *
 from bot_func.friend import *
-from bot_func.chat import reply_conversation, save_chat, update_conversation, generate_conversation, generate_vec
+from bot_func.chat import reply_conversation, save_chat, update_conversation, generate_conversation, generate_vec, learn_chat
 from bot_func.erhelp import *
 from bot_func.say_hi import *
 from bot_func.respond import respond_group
@@ -257,6 +257,7 @@ while True:
 
         else:
             repeat(gro_mess)
+            learn_chat(gro_mess, user_id)
 
         # 下一句是否需要回答的标志
         last_user = 123456789

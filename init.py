@@ -39,7 +39,7 @@ if 'trainning' not in existed_data_files1:
 if 'video_temp' not in existed_data_files1:
     os.mkdir(data_path + 'video_temp')
 
-need_files = ['account', 'chat.log', 'food_list', 'music', 'privates', 'responds']
+need_files = ['account', 'chat.log', 'food_list', 'music', 'privates', 'responds', 'group_chat_temp']
 for file in need_files:
     if file not in existed_data_files1:
         new_file(data_path, file)
@@ -61,6 +61,8 @@ if 'text' not in existed_data_files2:
 
 if len(os.listdir(data_path + 'trainning/conversation/')) == 0:
     shutil.copyfile('./init_files/conversation_example.yml', data_path + 'trainning/conversation/conversation_example.yml')
+if os.path.exists(data_path + 'trainning/conversation/group_learn.yml') == False:
+    shutil.copyfile('./init_files/group_learn.yml', data_path + 'trainning/conversation/group_learn.yml')
 if len(os.listdir(data_path + 'trainning/text/')) == 0:
     shutil.copyfile('./init_files/trainning_text_example.txt', data_path + 'trainning/text/trainning_text_example.txt')
 if os.path.exists(data_path + 'model_word2vec') == False:

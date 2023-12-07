@@ -172,6 +172,42 @@ def save_chat(word_in: str, word_out: str):
         f.write('%s | %s\n' % (word_in, word_out))
 
 
+def learn_chat(sentence: str, user_id: int):
+    """
+    将群聊中的对话保存到对话文件。
+    @param sentence: str
+    @param user_id: int
+    @return: bool
+    """
+    if ('[' in sentence) and (']' in sentence):
+        sentence = re.sub(u"\\[.*?]", "", sentence)
+    sentence = re.sub("[\s+\.\!\/_.$%^*(++\"\'“”《》]+|[+——！，。？、~·@#￥%……&* ( ) ◆☥♥【】（）《》‘’'-'；：‘]+", "", sentence)
+    sentence = sentence.replace('\n', '')
+    sentence = sentence.replace(' ', '')
+
+    with open(data_path + 'group_chat_temp', 'r', encoding='utf-8') as f:
+        chat_temp = f.read()
+    if chat_temp == '':
+        with open(data_path + 'group_chat_temp', 'w', encoding='utf-8') as f:
+            f.write(str(user_id) + '|' + sentence)
+        print(0)
+        return True
+    chat_temp_l = chat_temp.split('|')
+    user_last = chat_temp_l[0]
+    sentence_last = chat_temp_l[1].replace('\n', '')
+    if user_id == int(user_last):
+        sentence = sentence_last + sentence
+        print(1)
+    else:
+        with open(data_path + 'trainning/conversation/group_learn.yml', 'a', encoding='utf-8') as f:
+            f.write('- - ' + sentence_last + '\n')
+            f.write('  - ' + sentence + '\n')
+        print(2)
+    with open(data_path + 'group_chat_temp', 'w', encoding='utf-8') as f:
+        f.write(str(user_id) + '|' + sentence)
+    return True
+
+
 if __name__ == '__main__':
     # generate_vec()
     generate_conversation()
