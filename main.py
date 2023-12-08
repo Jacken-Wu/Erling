@@ -37,6 +37,12 @@ def get_message() -> dict:
     return mes
 
 
+# init
+with open(data_path + 'group_chat_temp', 'w', encoding='utf-8') as f:
+    pass
+
+
+# main loop
 while True:
     message = get_message()
     print(message)
