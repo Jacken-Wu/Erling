@@ -177,7 +177,7 @@ def learn_chat(sentence: str, user_id: int):
     将群聊中的对话保存到对话文件。
     @param sentence: str
     @param user_id: int
-    @return: int (0：开启新对话，1：清空，2：对话未结束，3：写入对话并开启下一段对话)
+    @return: int (0：开启新对话，1：清空，2：对话未结束，3：写入对话并开启下一段对话，4：写入对话但清空)
     """
     # 去掉CQ码、换行和空格
     if ('[' in sentence) and (']' in sentence):
@@ -197,6 +197,8 @@ def learn_chat(sentence: str, user_id: int):
     sentence_last = chat_temp_last[1].replace('\n', '')
     if len(chat_temp) == 1:
         if user_id == int(user_last):
+            if sentence == '':
+                return 2
             sentence = sentence_last + '，' + sentence
             if len(sentence) > 30:  # 语句太长，清空
                 with open(data_path + 'group_chat_temp', 'w', encoding='utf-8') as f:
@@ -218,6 +220,8 @@ def learn_chat(sentence: str, user_id: int):
     user_current = chat_temp_current[0]
     sentence_current = chat_temp_current[1].replace('\n', '')
     if user_id == int(user_current):
+        if sentence == '':
+            return 2
         sentence = sentence_current + '，' + sentence
         if len(sentence) > 30:  # 语句太长，清空
             with open(data_path + 'group_chat_temp', 'w', encoding='utf-8') as f:
@@ -233,10 +237,10 @@ def learn_chat(sentence: str, user_id: int):
         f.write('  - ' + sentence_current + '\n')
     print('已记录一对语句')
 
-    if len(sentence) > 30:  # 语句太长，清空
+    if (sentence == '') or (len(sentence) > 30):  # 语句为空或太长，清空
         with open(data_path + 'group_chat_temp', 'w', encoding='utf-8') as f:
             pass
-        return 1
+        return 4
     # 更新sentence次序
     with open(data_path + 'group_chat_temp', 'w', encoding='utf-8') as f:
         f.write('%s|%s\n%d|%s\n' % (user_current, sentence_current, user_id, sentence))
