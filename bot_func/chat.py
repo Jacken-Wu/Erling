@@ -188,6 +188,8 @@ def learn_chat(sentence: str, user_id: int):
     with open(data_path + 'group_chat_temp', 'r', encoding='utf-8') as f:
         chat_temp = f.readlines()
     if chat_temp == []:
+        if sentence == '':
+            return 1
         with open(data_path + 'group_chat_temp', 'w', encoding='utf-8') as f:
             f.write('%d|%s\n' % (user_id, sentence))
         return 0
