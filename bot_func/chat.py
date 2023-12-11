@@ -209,8 +209,8 @@ def learn_chat(sentence: str, user_id: int):
             with open(data_path + 'group_chat_temp', 'w', encoding='utf-8') as f:
                 f.write('%d|%s\n' % (user_id, sentence))
             return 2
-        
-        if len(sentence) > 30:  # 语句太长，清空
+
+        if (sentence == '') or (len(sentence) > 30):  # 语句为空或太长，清空
             with open(data_path + 'group_chat_temp', 'w', encoding='utf-8') as f:
                 pass
             return 1
