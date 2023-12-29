@@ -249,6 +249,17 @@ while True:
             send_group(reply, group_id)
             save_chat(input_str, reply)
 
+        elif ('[CQ:at,qq=%d]' % self_id) in gro_mess:
+            add_love(user_id, 2)
+            input_str = gro_mess.replace('[CQ:at,qq=%d]' % self_id, '')
+            input_str = input_str.replace(' ', '')
+            if input_str != '':
+                reply = reply_conversation(input_str)
+                send_group(reply, group_id)
+                save_chat(input_str, reply)
+            else:
+                send_group('怎么了？', group_id)
+
         elif ('b23.tv' in gro_mess) or ('bilibili.com/video' in gro_mess):
             add_video_todo(gro_mess)
 
