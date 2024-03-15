@@ -74,36 +74,43 @@ def generate_conversation() -> bool:
         pass
     model = Word2Vec.load(data_path + 'model_word2vec')
     pathes = os.listdir(data_path + 'trainning/conversation/')
+    chat_q = []
+    chat_a = []
     for path in pathes:
         with open(data_path + 'trainning/conversation/' + path, 'r', encoding='utf-8') as f:
             origin = f.readlines()
         origin = origin[3:]
-        with open(data_path + 'database_conversation.yml', 'a', encoding='utf-8') as f:
-            flag = False
-            for conver in origin:
-                if len(conver) > 4:
-                    if conver[:4] == '- - ':
-                        # 计算句向量
-                        words = split_sentence(conver[4:])
-                        length = len(words)
-                        vec = np.zeros(20)
-                        for word in words:
-                            try:
-                                vec += model.wv.get_vector(word)
-                            except KeyError:
-                                pass
-                        
-                        if length != 0:
-                            vec /= length
-                        
-                        if np.linalg.norm(vec) == 0:
-                            flag = False
-                        else:
-                            f.write('- - ' + str(list(vec)) + '\n')
-                            flag = True
-                    elif conver[:4] == '  - ':
-                        if flag == True:
-                            f.write('  - ' + conver[4:])
+        for conver in origin:
+            if len(conver) > 4:
+                if conver[:4] == '- - ':
+                    chat_q.append(conver[4:])
+                elif conver[:4] == '  - ':
+                    chat_a.append(conver[4:])
+
+    chat_vec_temp = []
+    chat_answer_tamp = []
+    with open(data_path + 'database_conversation.yml', 'a', encoding='utf-8') as f:
+        for i in range(len(chat_q)):
+            # 计算句向量
+            words = split_sentence(chat_q[i])
+            length = len(words)
+            vec = np.zeros(20)
+            for word in words:
+                try:
+                    vec += model.wv.get_vector(word)
+                except KeyError:
+                    pass
+
+            if length != 0:
+                vec /= length
+
+            vec_string = str(list(vec))
+            if (np.linalg.norm(vec) != 0) and (vec_string not in chat_vec_temp) and (chat_a[i] not in chat_answer_tamp):  # 模不为0且Q和A都未重复
+                chat_vec_temp.append(vec_string)
+                chat_answer_tamp.append(chat_a[i])
+                f.write('- - ' + vec_string + '\n')
+                f.write('  - ' + chat_a[i])
+
     return True
 
 
@@ -252,6 +259,7 @@ def learn_chat(sentence: str, user_id: int):
 if __name__ == '__main__':
     # generate_vec()
     generate_conversation()
+    update_conversation()
     # model = Word2Vec.load(data_path + 'model_word2vec')
     # print('和“超超”相关度最高的词：')
     # print(model.wv.most_similar('超超',topn=5))
