@@ -50,7 +50,7 @@ while True:
     if message['post_type'] == 'message' and message['message_type'] == 'private':
         if message['user_id'] == father_id:
             add_love(father_id, 1)
-            pri_mess = message['message']
+            pri_mess = message['raw_message']
 
             if pri_mess == '二澪':
                 send_message('在')
@@ -146,7 +146,7 @@ while True:
 
         else:
             user_id = message['user_id']
-            pri_mess = message['message']
+            pri_mess = message['raw_message']
 
             if len(pri_mess) >= 6:
                 try:
@@ -158,7 +158,7 @@ while True:
                     send_private('语法错误', user_id)
 
     elif message['post_type'] == 'message' and message['message_type'] == 'group' and message['group_id'] == group_id:
-        gro_mess = message['message']
+        gro_mess = message['raw_message']
         user_id = message['user_id']
 
         if gro_mess == '二澪':
@@ -297,7 +297,7 @@ while True:
                     message_send = '[CQ:poke,qq=%d]' % poke_id
                     send_group(message_send, group_id)
                     add_love(poke_id, 1)
-            
+
             elif 'sender_id' in message and message['sender_id'] == father_id:
                 no_type = message['notice_type']
 
