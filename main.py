@@ -51,6 +51,7 @@ while True:
         if message['user_id'] == father_id:
             add_love(father_id, 1)
             pri_mess = message['raw_message']
+            print(pri_mess)
 
             if pri_mess == '二澪':
                 send_message('在')
@@ -89,21 +90,21 @@ while True:
             if len(pri_mess) >= 6:
                 try:
                     if pri_mess[:4] == '提醒添加':
-                        add_notice(message['message'][5:], father_id)
+                        add_notice(pri_mess[5:], father_id)
                     elif pri_mess[:4] == '提醒删除':
-                        del_notice(message['message'][5:], father_id)
+                        del_notice(pri_mess[5:], father_id)
                     elif pri_mess[:4] == '记账支出':
-                        out_account(message['message'][5:])
+                        out_account(pri_mess[5:])
                     elif pri_mess[:4] == '记账收入':
-                        in_account(message['message'][5:])
+                        in_account(pri_mess[5:])
                     elif pri_mess[:4] == '记账删除':
-                        del_account(message['message'][5:])
+                        del_account(pri_mess[5:])
                     elif pri_mess[:4] == '推歌添加':
-                        add_music(message['message'][5:])
+                        add_music(pri_mess[5:])
                     elif pri_mess[:4] == '推歌删除':
-                        del_music(message['message'][5:])
+                        del_music(pri_mess[5:])
                     elif pri_mess[:4] == '添加歌曲':
-                        info = message['message'][5:].split()
+                        info = pri_mess[5:].split()
                         add4father_private(info)
                     elif pri_mess[:4] == '通过好友':
                         flag = pri_mess[5:]
@@ -113,7 +114,7 @@ while True:
 
         elif message['user_id'] in privates:
             user_id = message['user_id']
-            pri_mess = message['message']
+            pri_mess = message['raw_message']
 
             if pri_mess == '二澪':
                 send_private('在', user_id)
