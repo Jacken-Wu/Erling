@@ -44,7 +44,10 @@ with open(data_path + 'group_chat_temp', 'w', encoding='utf-8') as f:
 
 # main loop
 while True:
-    message = get_message()
+    try:
+        message = get_message()
+    except:
+        continue
     print(message)
 
     if message['post_type'] == 'message' and message['message_type'] == 'private':
@@ -295,7 +298,7 @@ while True:
                 # 戳一戳
                 elif no_type == 'notify' and message['sub_type'] == 'poke' and message['target_id'] == self_id:
                     poke_id = message['user_id']
-                    message_send = '[CQ:poke,qq=%d]' % poke_id
+                    message_send = '呜呜'
                     send_group(message_send, group_id)
                     add_love(poke_id, 1)
 
