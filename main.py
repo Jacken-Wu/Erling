@@ -298,16 +298,15 @@ while True:
                 # 戳一戳
                 elif no_type == 'notify' and message['sub_type'] == 'poke' and message['target_id'] == self_id:
                     poke_id = message['user_id']
-                    message_send = '呜呜'
-                    send_group(message_send, group_id)
                     add_love(poke_id, 1)
+                    poke_group(poke_id)
 
             elif 'sender_id' in message and message['sender_id'] == father_id:
                 no_type = message['notice_type']
 
                 # 戳一戳
                 if no_type == 'notify' and message['sub_type'] == 'poke' and message['target_id'] == self_id:
-                    message_send = '[CQ:poke,qq=%d]' % father_id
+                    message_send = '在'
                     send_message(message_send)
                     add_love(father_id, 1)
 

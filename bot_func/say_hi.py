@@ -83,3 +83,26 @@ def what_group() -> None:
     elif sel == 2:
         back = '什么，在想我的事情？'
     send_group(back, group_id)
+
+
+def poke_group(poke_id: int) -> None:
+    """
+    群聊中有人戳一戳时，做出回应。
+    """
+    sel = random.randint(0, 6)
+    message_send = '呜呜'
+    if sel == 0:
+        message_send = '呜呜'
+    elif sel == 1:
+        message_send = '┭┮﹏┭┮'
+    elif sel == 2:
+        message_send = '...'
+    elif sel == 3:
+        message_send = '[CQ:at,qq=%d] ○･｀Д´･ ○' % poke_id
+    elif sel == 4:
+        message_send = '[CQ:at,qq=%d]\n        👊    👊  👊  欧拉👊   \n👊   👊欧拉    👊 👊   👊   👊   欧拉👊 👊   👊欧拉👊        👊\n   👊     👊  👊欧拉👊   👊   👊\n          欧拉👊   👊 👊   欧拉' % poke_id
+    elif sel == 5:
+        message_send = '[CQ:at,qq=%d] 💢' % poke_id
+    elif sel == 6:
+        message_send = '[CQ:at,qq=%d]🤨' % poke_id
+    send_group(message_send, group_id)
