@@ -301,7 +301,7 @@ while True:
                     add_love(poke_id, 1)
                     poke_group(poke_id)
 
-            elif 'sender_id' in message and message['sender_id'] == father_id:
+            elif 'group_id' not in message and message['user_id'] == father_id:
                 no_type = message['notice_type']
 
                 # 戳一戳
