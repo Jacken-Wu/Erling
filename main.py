@@ -163,6 +163,8 @@ while True:
 
     elif message['post_type'] == 'message' and message['message_type'] == 'group' and message['group_id'] == group_id:
         gro_mess = message['raw_message']
+        if 'type' in message['message'] and message['message']['type'] == 'text':
+            gro_mess = message['message']['data']['text']
         user_id = message['user_id']
 
         if gro_mess == '二澪':
