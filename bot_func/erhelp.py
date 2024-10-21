@@ -73,36 +73,36 @@ def help_group(msg_list: list, group_id: int) -> None:
     back = 'erhelp XXX'
     if (len(msg_list) == 0) or (len(msg_list) >= 2):
         back = 'erhelp XXX\n推歌/点歌/添加歌曲/errand/添加食物/删除食物/吃啥/erlove/商店/购买/背包/改名/应和卡/ertrans/私聊卡/天气\n或查看https://jacken-wu.github.io/Erhelp/'
-    elif msg_list[1] == '推歌':
+    elif msg_list[0] == '推歌':
         back = '二澪 推歌 [t:类型] [s:歌手] [p:P主]'
-    elif msg_list[1] == '点歌':
+    elif msg_list[0] == '点歌':
         back = '二澪 点歌 歌名'
-    elif msg_list[1] == '添加歌曲':
+    elif msg_list[0] == '添加歌曲':
         back = '二澪 添加歌曲 歌名 网址 tag1,tag2... 歌手1,2... P主1,2...'
-    elif msg_list[1] == 'errand':
+    elif msg_list[0] == 'errand':
         back = 'errand XXX1 XXX2 XXX3 ...'
-    elif msg_list[1] == '添加食物':
+    elif msg_list[0] == '添加食物':
         back = '二澪 添加食物 食物名称 食物标签(可选)'
-    elif msg_list[1] == '删除食物':
+    elif msg_list[0] == '删除食物':
         back = '二澪 删除食物 食物名称'
-    elif msg_list[1] == '吃啥':
+    elif msg_list[0] == '吃啥':
         back = '二澪 吃啥 食物标签(可选)'
-    elif msg_list[1] == 'erlove':
+    elif msg_list[0] == 'erlove':
         back = 'erlove'
-    elif msg_list[1] == '商店':
+    elif msg_list[0] == '商店':
         back = '二澪 商店'
-    elif msg_list[1] == '购买':
+    elif msg_list[0] == '购买':
         back = '二澪 购买 物品名字'
-    elif msg_list[1] == '背包':
+    elif msg_list[0] == '背包':
         back = '二澪 背包（查看已有物品）'
-    elif msg_list[1] == '改名':
+    elif msg_list[0] == '改名':
         back = '二澪 改名 名字（需持有至少一张改名卡）'
-    elif msg_list[1] == '应和卡':
+    elif msg_list[0] == '应和卡':
         back = '二澪 应和卡（需持有至少一张应和卡）'
-    elif msg_list[1] == 'ertrans':
+    elif msg_list[0] == 'ertrans':
         back = '二澪 任意语句（回复英文翻译）'
-    elif msg_list[1] == '私聊卡':
+    elif msg_list[0] == '私聊卡':
         back = '二澪 私聊卡'
-    elif msg_list[1] == '天气':
+    elif msg_list[0] == '天气':
         back = '二澪 天气'
     send_group(back, group_id)
