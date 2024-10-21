@@ -163,8 +163,6 @@ while True:
 
     elif message['post_type'] == 'message' and message['message_type'] == 'group' and message['group_id'] == group_id:
         gro_mess = message['raw_message']
-        if 'type' in message['message'] and message['message']['type'] == 'text':
-            gro_mess = message['message']['data']['text']
         user_id = message['user_id']
 
         if gro_mess == '二澪':
@@ -276,7 +274,8 @@ while True:
             save_chat(gro_mess, reply)
 
         elif (user_id in responds) and (len(gro_mess) > 0):
-            respond_group(user_id, gro_mess)
+            if 'type' in message['message'] and message['message']['type'] == 'text':
+                respond_group(message['message']['data']['text'])
 
         else:
             repeat(gro_mess)
