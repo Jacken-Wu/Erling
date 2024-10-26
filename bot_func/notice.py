@@ -118,7 +118,7 @@ def view_music() -> None:
     send_message(music_s)
 
 
-def del_music(num: int) -> None:
+def del_music(num: str) -> None:
     """
     删除定时群聊消息。
     @param num: 定时消息序号

@@ -186,7 +186,7 @@ while True:
                 back = '[CQ:at,qq=%d]二澪对%s的love值为%d' % (user_id, call, love)
                 send_group(back, group_id)
 
-        elif gro_mess in ['早', '哦哈哟', '早上好','早安']:
+        elif gro_mess in ['早', '哦哈哟', '早上好', '早安']:
             morning_group(user_id)
 
         elif gro_mess in ['晚安群友', '群友晚安', '晚安', '睡了', '晚安二澪', '二澪晚安']:
@@ -274,8 +274,8 @@ while True:
             save_chat(gro_mess, reply)
 
         elif (user_id in responds) and (len(gro_mess) > 0):
-            if 'type' in message['message'] and message['message']['type'] == 'text':
-                respond_group(message['message']['data']['text'])
+            if 'type' in message['message'][0] and message['message'][0]['type'] == 'text':
+                respond_group(user_id, message['message'][0]['data']['text'])
 
         else:
             repeat(gro_mess)
@@ -287,31 +287,32 @@ while True:
             last_user = user_id
 
     elif message['post_type'] == 'notice':
-            if 'group_id' in message and message['group_id'] == group_id:
-                no_type = message['notice_type']
+        if 'group_id' in message and message['group_id'] == group_id:
+            no_type = message['notice_type']
 
-                # 加群欢迎
-                if no_type == 'group_increase':
-                    new_id = message['user_id']
-                    message_send = '[CQ:at,qq=%d]举朵小花欢迎你！' % new_id
-                    send_group(message_send, group_id)
+            # 加群欢迎
+            if no_type == 'group_increase':
+                new_id = message['user_id']
+                message_send = '[CQ:at,qq=%d]举朵小花欢迎你！' % new_id
+                send_group(message_send, group_id)
 
-                # 戳一戳
-                elif no_type == 'notify' and message['sub_type'] == 'poke' and message['target_id'] == self_id:
-                    poke_id = message['user_id']
-                    add_love(poke_id, 1)
-                    poke_group(poke_id)
+            # 戳一戳
+            elif no_type == 'notify' and message['sub_type'] == 'poke' and message['target_id'] == self_id:
+                poke_id = message['user_id']
+                add_love(poke_id, 1)
+                poke_group(poke_id)
 
-            elif 'group_id' not in message and message['user_id'] == father_id:
-                no_type = message['notice_type']
+        elif 'group_id' not in message and message['user_id'] == father_id:
+            no_type = message['notice_type']
 
-                # 戳一戳
-                if no_type == 'notify' and message['sub_type'] == 'poke' and message['target_id'] == self_id:
-                    message_send = '在'
-                    send_message(message_send)
-                    add_love(father_id, 1)
+            # 戳一戳
+            if no_type == 'notify' and message['sub_type'] == 'poke' and message['target_id'] == self_id:
+                message_send = '在'
+                send_message(message_send)
+                add_love(father_id, 1)
 
     elif message['post_type'] == 'request' and message['request_type'] == 'friend':
         user_id = message['user_id']
-        back = str(user_id) + '好友请求：' +  message['comment'] + '(' + message['flag'] + ')'
+        back = str(user_id) + '好友请求：' + \
+            message['comment'] + '(' + message['flag'] + ')'
         send_message(back)
