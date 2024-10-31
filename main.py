@@ -24,16 +24,16 @@ ListenSocket.bind(('127.0.0.1', 5701))
 ListenSocket.listen(100)
 
 
-def json_to_dic(json_text):
+def json_to_dic(json_text) -> dict:
     for i in range(len(json_text)):
         if json_text[i] == '{':
             return json.loads(json_text[i:], strict=False)
-    return None
+    return {}
 
 
 def get_message() -> dict:
     conn, addr = ListenSocket.accept()
-    mes = json_to_dic(conn.recv(4096).decode('utf-8', 'ignore'))
+    mes: dict = json_to_dic(conn.recv(4096).decode('utf-8', 'ignore'))
     return mes
 
 
@@ -51,6 +51,7 @@ while True:
     print(message)
 
     if message['post_type'] == 'message' and message['message_type'] == 'private':
+        # Chat privately with father.
         if message['user_id'] == father_id:
             add_love(father_id, 1)
             pri_mess = message['raw_message']
@@ -115,6 +116,7 @@ while True:
                 except:
                     send_message('语法错误')
 
+        # Chat privately with other users on the list.
         elif message['user_id'] in privates:
             user_id = message['user_id']
             pri_mess = message['raw_message']
@@ -148,6 +150,7 @@ while True:
                 except:
                     send_private('语法错误', user_id)
 
+        # Chat privately with other users not on the list.
         else:
             user_id = message['user_id']
             pri_mess = message['raw_message']
@@ -161,6 +164,7 @@ while True:
                 except:
                     send_private('语法错误', user_id)
 
+    # Chat in the target group.
     elif message['post_type'] == 'message' and message['message_type'] == 'group' and message['group_id'] == group_id:
         gro_mess = message['raw_message']
         user_id = message['user_id']
@@ -286,6 +290,7 @@ while True:
         if gro_mess == '二澪':
             last_user = user_id
 
+    # Deal with the notice of the target group.
     elif message['post_type'] == 'notice':
         if 'group_id' in message and message['group_id'] == group_id:
             no_type = message['notice_type']
@@ -311,6 +316,7 @@ while True:
                 send_message(message_send)
                 add_love(father_id, 1)
 
+    # Deal with friend requests.
     elif message['post_type'] == 'request' and message['request_type'] == 'friend':
         user_id = message['user_id']
         back = str(user_id) + '好友请求：' + \
