@@ -56,7 +56,7 @@
 
 ### 首次使用
 
-1. 使用前请下载~~并运行 [go-cqhttp](https://docs.go-cqhttp.org/guide/quick_start.html)~~支持OneBot协议的QQ机器人框架，如下所示配置 HTTP 通信
+1. 使用前请下载 ~~并运行[go-cqhttp](https://docs.go-cqhttp.org/guide/quick_start.html)~~ 支持OneBot协议的QQ机器人框架，如下所示配置 HTTP 通信
 
     ``` yml
     - http:
