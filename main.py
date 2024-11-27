@@ -27,7 +27,11 @@ ListenSocket.listen(100)
 def json_to_dic(json_text) -> dict:
     for i in range(len(json_text)):
         if json_text[i] == '{':
-            return json.loads(json_text[i:], strict=False)
+            json_text = json_text[i:]
+            break
+    for i in range(len(json_text), 0, -1):
+        if json_text[i-1] == '}':
+            return json.loads(json_text[:i], strict=False)
     return {}
 
 
