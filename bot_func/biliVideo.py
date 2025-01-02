@@ -31,6 +31,11 @@ def BiliScratch(v_link: str):
             playinfo = playinfos[0]  # 播放信息读取
             pinfo_json = json.loads(playinfo)  # 转为python的字典格式
 
+            if 'data' not in pinfo_json:
+                print('pinfo_json无data字段，获取视频信息失败')
+                send_group('获取视频信息失败', group_id)
+                return False
+
             audio_url = pinfo_json['data']['dash']['audio'][0]['baseUrl']
             video_url = pinfo_json['data']['dash']['video'][0]['baseUrl']
 
@@ -51,6 +56,7 @@ def BiliScratch(v_link: str):
             return True
     else:
         print("Response:", resp.status_code)
+        send_group('网络错误', group_id)
         return False
 
 
