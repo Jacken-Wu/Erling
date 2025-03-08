@@ -35,7 +35,19 @@ def BiliScratch(v_link: str):
                 print('pinfo_json无data字段，获取视频信息失败')
                 send_group('获取视频信息失败', group_id)
                 return False
-
+            elif 'dash' not in pinfo_json['data']:
+                print('pinfo_json无dash字段，获取视频信息失败')
+                send_group('获取视频信息失败', group_id)
+                return False
+            elif 'audio' not in pinfo_json['data']['dash']:
+                print('pinfo_json无audio字段，获取视频信息失败')
+                send_group('获取视频信息失败', group_id)
+                return False
+            elif 'video' not in pinfo_json['data']['dash']:
+                print('pinfo_json无video字段，获取视频信息失败')
+                send_group('获取视频信息失败', group_id)
+                return False
+ 
             audio_url = pinfo_json['data']['dash']['audio'][0]['baseUrl']
             video_url = pinfo_json['data']['dash']['video'][0]['baseUrl']
 
